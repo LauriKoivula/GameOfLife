@@ -15,11 +15,13 @@ public class Taulukko {
     private int rivejä;
     private int kolumneja;
     private Solu[][] taulukko;
+    private double solutiheys;
 
-    public Taulukko(int rivejä, int kolumneja) {
+    public Taulukko(int rivejä, int kolumneja, double tiheys) {
 
         this.rivejä = rivejä;
         this.kolumneja = kolumneja;
+        this.solutiheys = tiheys;
 
         Random random = new Random();
 
@@ -31,7 +33,7 @@ public class Taulukko {
         for (int rivi = 0; rivi < rivejä; rivi++) {
             for (int sarake = 0; sarake < kolumneja; sarake++) {
                 double testi = random.nextDouble();
-                if (testi < 0.6) {
+                if (testi < this.solutiheys) {
                     taulukko[rivi][sarake] = new Solu(rivi, sarake, true);
                 } else {
                     taulukko[rivi][sarake] = new Solu(rivi, sarake, false);
@@ -50,7 +52,6 @@ public class Taulukko {
                 }
             }
         }
-
     }
 
     public void luoTaulukko() {
