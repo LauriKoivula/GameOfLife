@@ -24,43 +24,11 @@ public class Solu {
 
     }
 
-    // Toteutetaan Taulukko-luokassa, koska siellä tiedetään kaikki matriisin solut
-//    public int getNaapurit() {
-//        // käydään naapurit läpi
-//        int naapurit = 0;
-//        for (int i = this.rivi - 1; i < this.rivi + 1; i++) {
-//            for (int j = this.kolumni - 1; j < this.kolumni + 1; j++) {
-//                if (this.elossa == true) {
-//                    // ei toimi näin, tarkastaa vain kyseisen solun
-//                    if (this.elossa == true && i == this.rivi && j == this.kolumni) {
-//                    }
-//                    naapurit++;
-//                }
-//            }
-//        }
-//
-//        return naapurit;
-//        //  return this.naapureita;
-//    }
-
-    // Turha metodi - ei järkeä asettaa numeromäärää naapureille
-//    public void setNaapurit(int naapurit) {
-//        if (naapurit < 0) {
-//            this.naapureita = 0;
-//        } else {
-//            this.naapureita = naapurit;
-//        }
-//    }
-
-    // turha metodi - ei järkeä asettaa numeromäärää naapureille
-//    public void addNaapuri() {
-//        ++this.naapureita;
-//    }
-
-    public void nollaaNaapurit() {
-        this.naapureita = 0;
-    }
-
+    /**
+     * Metodi palauttaa rivin, jolla solu on. 
+     * 
+     * @return Rivi, jolla solu sijaitsee. 
+     */
     public int getRivi() {
         return this.rivi;
     }

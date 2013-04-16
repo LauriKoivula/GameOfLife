@@ -16,73 +16,62 @@ public class Logiikka {
         this.taulukko = taulukko;
     }
 
-    public Taulukko käsitteleTaulukko(Taulukko taulukko) {
+    /**
+     * Käsittelee metodille annetun Taulukon pelin sääntöjen mukaisesti:
+     * S23/B3
+     * 
+     * @param taulukko
+     * @return 
+     */
+    public Taulukko kasitteleTaulukko(Taulukko taulukko) {
 
         // pitäisi luoda uusi taulukko, johon uudet arvot sijoitetaan
         // -> metodin lopussa palautetaan uusi taulukko
 
         // luodaan uusi taulukko - sama koko kuin vanha, tideydellä ei väliä koska sinne 
         // sijoitetaan uudet arvot
+        
+        long aika = System.currentTimeMillis();
+        
+        System.out.println("a " + aika);
+        
         Taulukko uusiTaulukko = new Taulukko(taulukko.getRivit(), taulukko.getKolumnit(), 0);
 
+        System.out.println("b " + aika);
+        
         int rivit = taulukko.getRivit();
         int kolumnit = taulukko.getKolumnit();
 
-//        System.out.println(Integer.toString(rivit) + "riviä");
-//        System.out.println(Integer.toString(kolumnit) + "kolumnia");
-
+        System.out.println("c " + aika);
+        
         for (int rivi = 0; rivi <= rivit - 1; rivi++) {
-            //    System.out.println("tarkistuspiste 3");
+            
+            System.out.println("d " + aika);
+            
             for (int sarake = 0; sarake <= kolumnit - 1; sarake++) {
-
-//                if (taulukko.getSolu(rivi, sarake).getElossa() == true
-//                        && taulukko.getSolunNaapurit(rivi, sarake) < 4
-//                        && taulukko.getSolunNaapurit(rivi, sarake) > 1) {
-//                    uusiTaulukko.getSolu(rivi, sarake).setHerätä();
-//                    System.out.println("jää eloon");
-//                    laskukerrat++;
-//                    // jää eloon - ei tehdä mitään
-//                }
-                //  System.out.println("tarkistuspiste 5");
                 
-                // if -lauseet täytyi yhdistää, muuten ei toimi
+                System.out.println("e " + aika);
                 
-                if (taulukko.getSolu(rivi, sarake).getElossa() == false
-                        && taulukko.getSolunNaapurit(rivi, sarake) == 3 ||
-                        taulukko.getSolu(rivi, sarake).getElossa() == true
-                        && taulukko.getSolunNaapurit(rivi, sarake) < 4
-                        && taulukko.getSolunNaapurit(rivi, sarake) > 1) {
-                    // jos kuollut ja kolme naapuria - herätä
-                    //      System.out.println("tarkistuspiste 6");
-                    // taulukko.getSolu(rivi, sarake).setHerätä(); - vanha tapa
-                    uusiTaulukko.getSolu(rivi, sarake).setHerätä();
-                  //  System.out.println("herätys");
-                } else {
-                    // muissa tapauksissa solu kuolee
-                    // taulukko.getSolu(rivi, sarake).setNukuta(); - vanha tapa
-                    uusiTaulukko.getSolu(rivi, sarake).setNukuta();
-                 //   System.out.println("nukuta");
-                }
-
+                kasitteleSolu(taulukko, rivi, sarake, uusiTaulukko);
             }
         }
         return uusiTaulukko;
-
-
-//        if (taulukko.getElossa() && this.solu.getNaapurit()<4 && this.solu.getNaapurit()>1) {
-//            // jää eloon
-//        }
-//        if (this.solu.getElossa() == false && this.solu.getNaapurit() == 3) {
-//            // jos koullut ja kolme naapuria - herätä
-//            this.solu.setHerätä();
-//        }
-//        else {
-//            // muissa tapauksissa solu koulee
-//            this.solu.setNukuta();
-//        }
-
-
     }
 
+    public void kasitteleSolu(Taulukko taulukko, int rivi, int sarake, Taulukko uusiTaulukko) {
+        if (taulukko.getSolu(rivi, sarake).getElossa() == false
+                && taulukko.getSolunNaapurit(rivi, sarake) == 3
+                || taulukko.getSolu(rivi, sarake).getElossa() == true
+                && taulukko.getSolunNaapurit(rivi, sarake) <= 3
+                && taulukko.getSolunNaapurit(rivi, sarake) >= 2) {
+            // jos kuollut ja kolme naapuria - herätä
+            // tai elossa ja 2-3 naapuria - jätä eloon
+            uusiTaulukko.getSolu(rivi, sarake).setHerätä();
+        } else {
+            // muissa tapauksissa solu kuolee
+            uusiTaulukko.getSolu(rivi, sarake).setNukuta();
+        }
+    }
+    
     
 }

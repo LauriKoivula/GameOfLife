@@ -17,6 +17,13 @@ public class Taulukko {
     private Solu[][] taulukko;
     private double solutiheys;
 
+    /**
+     * Luo taulukon halutulle koolle ja solutiheydelle.
+     * 
+     * @param rivejä käyttäjän antama rivimäärä
+     * @param kolumneja käyttäjän antama sarakemäärä
+     * @param tiheys käyttäjän antama solutiheys välillä 0.0-1.0
+     */
     public Taulukko(int rivejä, int kolumneja, double tiheys) {
 
         this.rivejä = rivejä;
@@ -40,25 +47,12 @@ public class Taulukko {
                 }
             }
         }
-
-        // Solumatriisin tulostustesti
-
-//        for (int rivi = 0; rivi < this.rivejä; rivi++) {
-//            for (int sarake = 0; sarake < kolumneja; sarake++) {
-//                if (sarake < kolumneja - 1) {
-//                    System.out.print(taulukko[rivi][sarake].toString());
-//                } else {
-//                    System.out.println(taulukko[rivi][sarake].toString());
-//                }
-//            }
-//        }
     }
 
-    public void luoTaulukko() {
-        // taulukon luonti pitäisi toimia taulukko luokan sisällä. 
-        // Sen metodeja voidaan kutsua vain ylempää. 
-    }
 
+    /**
+     * Tulostaa taulukon käyttäen Solun toString ominaisuuksia. 
+     */
     public void tulostaTaulukko() {
         for (int rivi = 0; rivi < this.rivejä; rivi++) {
             for (int sarake = 0; sarake < kolumneja; sarake++) {
@@ -83,6 +77,13 @@ public class Taulukko {
         return taulukko[rivi][kolumni];
     }
  
+    /**
+     * Metodi laskee yksittäisen solun ympärillä olevien elossa olevien solujen määrän.
+     * 
+     * @param rivi millä rivillä tarkasteltava solu sijaitsee
+     * @param kolumni missä sarakkeessa tarkasteltava solu sijaitsee
+     * @return Elossa olevien naapurien määrä
+     */
     public int getSolunNaapurit(int rivi, int kolumni) {
         int naapurit = 0;
 
@@ -101,41 +102,6 @@ public class Taulukko {
             }
         }
 
-//        for (int i = rivi - 1; i <= rivi + 1; i++) {
-//            for (int j = kolumni - 1; j <= kolumni + 1; j++) {
-//                // reunoilla sijaitsevat solut - indeksi ei voi olla negatiivinen
-//
-//                if (i < 0) {
-//                    i = 0;
-//                }
-//                if (j < 0) {
-//                    j = 0;
-//                }
-//
-//                    if (i > this.getRivit() - 1) {
-//                        i = this.getRivit() - 1;
-//                    }
-//                    if (j > this.getKolumnit() - 1) {
-//                        j = this.getKolumnit() - 1;
-//                    }
-//                    // positiiviset ylitykset pitää myös hoitaa jotenkin
-//                    // - indeksi ei voi olla suurempi kuin rivien tai kolumnien määrä
-//                    // tässä käsitellään taulukkoa indeksien avulla
-//                    // -> ne ovat yhtä pienemmät kuin kyseinen rivi tai kolumni
-//
-//                    if (taulukko[i][j].getElossa() == true) {
-////                    System.out.println(naapurit);
-////                    System.out.println("välissä");
-//                        if (taulukko[i][j].getElossa() == true && i == rivi && j == kolumni) {
-////                        System.out.println("osui");
-//                            naapurit--;
-//                        }
-//                        naapurit++;
-//                    }
-//                
-////                System.out.println(i + " " + j);
-//            }
-//        }
         return naapurit;
     }
 
