@@ -34,8 +34,8 @@ public class GOLpeliTest {
 
     @Before
     public void setUp() {
-        taulukko = new Taulukko(6, 12);
-        solu = new Solu(1, 1, true);
+        taulukko = new Taulukko(6, 12, 1);
+        
     }
 
     @After
@@ -58,47 +58,25 @@ public class GOLpeliTest {
 
     @Test
     public void onkoEläväSoluElossa() {
-        assertTrue("Solu ei ole jostain syystä elossa.", solu.getElossa());
-    }
-
-    @Test
-    public void onnistuukoNaapurienAsettaminen() {
-        String naapuritennen = Integer.toString(solu.getNaapurit());
-        solu.setNaapurit(5);
-        assertEquals("Naapurit väärin.", naapuritennen, Integer.toString(solu.getNaapurit() - 5));
-    }
-
-    @Test
-    public void onnistuukoNaapurinLisäys() {
-        String naapuritennen = Integer.toString(solu.getNaapurit());
-        solu.addNaapuri();
-        assertEquals("Naapurien lisäys ei onnistu.", naapuritennen, Integer.toString(solu.getNaapurit() - 1));
-    }
-
-    @Test
-    public void onnistuukoNaapurienNollaus() {
-        String naapuritennen = Integer.toString(solu.getNaapurit());
-        solu.addNaapuri();
-        solu.nollaaNaapurit();
-        assertEquals("Naapurien nollaus ei onnistu.", naapuritennen, Integer.toString(solu.getNaapurit()));
+        assertTrue("Solu ei ole jostain syystä elossa.", taulukko.getSolu(1, 1).getElossa());
     }
 
     @Test
     public void onnistuukoSolunNukuttaminen() {
-        solu.setNukuta();
-        assertFalse("Solun nukuttaminen ei onnistu", solu.getElossa());
+        taulukko.getSolu(1,1).setNukuta();
+        assertFalse("Solun nukuttaminen ei onnistu", taulukko.getSolu(1,1).getElossa());
     }
 
     @Test
     public void onnistuukoSolunHerättäminen() {
-        solu.setNukuta();
-        solu.setHerätä();
-        assertTrue("Solun herättäminen ei onnistu", solu.getElossa());
+        taulukko.getSolu(1,1).setNukuta();
+        taulukko.getSolu(1,1).setHerätä();
+        assertTrue("Solun herättäminen ei onnistu", taulukko.getSolu(1,1).getElossa());
     }
 
     @Test
     public void toimiikoToString() {
-        assertEquals("Tulostus ei toimi.", "X", solu.toString());
+        assertEquals("Tulostus ei toimi.", "X ", (taulukko.getSolu(1, 1).toString()));
 
     }
 }
