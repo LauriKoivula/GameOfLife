@@ -53,6 +53,6 @@ public class GOLpeli {
 //        TaulukkoGUI gui = new TaulukkoGUI(kolmasAskel);
 //        SwingUtilities.invokeLater(gui);
         
-        Kayttoliittyma peli = new Kayttoliittyma(15,15,0.2);
+        Kayttoliittyma peli = new Kayttoliittyma(30,30,0.2);
     }
 }

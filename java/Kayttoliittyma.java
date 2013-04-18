@@ -4,6 +4,7 @@
  */
 package golpeli;
 
+import gui.InfoGUI;
 import gui.TaulukkoGUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,10 +20,12 @@ public class Kayttoliittyma {
     private Taulukko tokaAskel;
     private Logiikka logiikka;
     private TaulukkoGUI gui;
+    private InfoGUI info;
     private int riveja;
     private int kolumneja;
     private double tiheys;
-    private boolean pause;
+    private int simu;
+    private int maara;
 
     // Konstruktori
     public Kayttoliittyma(int rivit, int kolumnit, double tiheys) {
@@ -35,33 +38,53 @@ public class Kayttoliittyma {
         this.ekaAskel = new Taulukko(this.riveja, this.kolumneja, this.tiheys);
 
         // simulointi looppi
-        int numero = 0;
+        this.maara = 100;
+        this.simu = 0;
         // kuinka monta askelta simuloidaan
-        while (numero < 100) {
+        while (this.simu < maara) {
 
-            if (numero == 0) {
+            if (this.simu == 0) {
                 this.gui = new TaulukkoGUI(this.ekaAskel);
                 SwingUtilities.invokeLater(gui);
+                this.info = new InfoGUI();
+                this.info.piirra(this.simu, this.maara);
+                SwingUtilities.invokeLater(info);
             }
-            
+            this.simu++;
+
+            // kun paussi painettu odotetaan
+            while (this.info.getPause().equals("Simuloi")) {
+                lyhytViivytys();
+            }
+
             viivytys();
 
+            this.info.paivitaInfo(this.simu);
             this.logiikka = new Logiikka(this.ekaAskel);
             this.tokaAskel = this.logiikka.kasitteleTaulukko(this.ekaAskel);
             this.gui.paivitaTaulukko(this.tokaAskel);
+
             // paivitaTaulukko-metodi vie aikaa n.150ms, mikä on paljon.
             // SwingUtilities.invokeLater(gui);
             this.ekaAskel = this.tokaAskel;
-            numero++;
-
         }
     }
 
     private void viivytys() {
         // viivytys
         long present = System.currentTimeMillis();
-        System.out.println(present);
-        long delay = 200;
+        long delay = 150;
+        long katkaisu = present + delay;
+        while (present < katkaisu) {
+            present = System.currentTimeMillis();
+            // antaa ajan kulua delayn osoittaman millisekuntia.
+        }
+    }
+
+    private void lyhytViivytys() {
+        // lyhyt viive napin painamisen odottamista varten
+        long present = System.currentTimeMillis();
+        long delay = 10;
         long katkaisu = present + delay;
         while (present < katkaisu) {
             present = System.currentTimeMillis();

@@ -33,26 +33,28 @@ public class Logiikka {
         
         long aika = System.currentTimeMillis();
         
-        System.out.println("a " + aika);
+     //   System.out.println("a " + aika);
         
         Taulukko uusiTaulukko = new Taulukko(taulukko.getRivit(), taulukko.getKolumnit(), 0);
 
-        System.out.println("b " + aika);
+     //   System.out.println("b " + aika);
         
         int rivit = taulukko.getRivit();
         int kolumnit = taulukko.getKolumnit();
 
-        System.out.println("c " + aika);
+    //    System.out.println("c " + aika);
         
         for (int rivi = 0; rivi <= rivit - 1; rivi++) {
             
-            System.out.println("d " + aika);
+       //     System.out.println("d " + aika);
             
             for (int sarake = 0; sarake <= kolumnit - 1; sarake++) {
                 
-                System.out.println("e " + aika);
+         //       System.out.println("e " + aika);
                 
                 kasitteleSolu(taulukko, rivi, sarake, uusiTaulukko);
+                // voisiko tehdä näin? 
+                //  taulukko.getSolu(rivi, kolumnit)
             }
         }
         return uusiTaulukko;
