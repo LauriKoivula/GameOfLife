@@ -6,7 +6,7 @@ package golpeli;
 
 /**
  *
- * @author Riki Sorsan veli
+ * @author Lauri Koivula
  */
 public class Solu {
 
@@ -49,22 +49,37 @@ public class Solu {
         return this.elossa;
     }
 
-    public void setHerätä() {
+    /**
+     * Asettaa kyseisen solun eloon.
+     * 
+     */
+    public void setHerata() {
         this.elossa = true;
     }
 
+    /**
+     * Asettaa kyseisen solun nukkumaan. 
+     * 
+     */
     public void setNukuta() {
         this.elossa = false;
     }
-
+    
+    /**
+     * Tulostaa Solun elossa olemisen perusteella, jotta 
+     * voidaan käyttää ilman graafista alustaa. 
+     * 
+     * @return X jos solu on elossa ja o jos solu on nukkumassa. 
+     */
     @Override
     public String toString() {
-        String palautus;
-        if (this.elossa) {
-            palautus = "X ";
+        String tuloste; 
+        if (this.elossa==true) {
+            tuloste ="X ";
         } else {
-            palautus = "- ";
+            tuloste = "o ";
         }
-        return palautus;
+        return tuloste;
     }
+
 }

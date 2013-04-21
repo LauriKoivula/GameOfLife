@@ -17,49 +17,34 @@ public class Logiikka {
     }
 
     /**
-     * Käsittelee metodille annetun Taulukon pelin sääntöjen mukaisesti:
-     * S23/B3
-     * 
+     * Käsittelee metodille annetun Taulukon pelin sääntöjen mukaisesti: S23/B3
+     *
      * @param taulukko
-     * @return 
+     * @return Paulautetaan uusi Taulukko, jossa uudet arvot
      */
     public Taulukko kasitteleTaulukko(Taulukko taulukko) {
 
-        // pitäisi luoda uusi taulukko, johon uudet arvot sijoitetaan
-        // -> metodin lopussa palautetaan uusi taulukko
-
-        // luodaan uusi taulukko - sama koko kuin vanha, tideydellä ei väliä koska sinne 
-        // sijoitetaan uudet arvot
-        
-        long aika = System.currentTimeMillis();
-        
-     //   System.out.println("a " + aika);
-        
         Taulukko uusiTaulukko = new Taulukko(taulukko.getRivit(), taulukko.getKolumnit(), 0);
 
-     //   System.out.println("b " + aika);
-        
         int rivit = taulukko.getRivit();
         int kolumnit = taulukko.getKolumnit();
 
-    //    System.out.println("c " + aika);
-        
         for (int rivi = 0; rivi <= rivit - 1; rivi++) {
-            
-       //     System.out.println("d " + aika);
-            
             for (int sarake = 0; sarake <= kolumnit - 1; sarake++) {
-                
-         //       System.out.println("e " + aika);
-                
                 kasitteleSolu(taulukko, rivi, sarake, uusiTaulukko);
-                // voisiko tehdä näin? 
-                //  taulukko.getSolu(rivi, kolumnit)
             }
         }
         return uusiTaulukko;
     }
 
+    /**
+     * Käsittelee yksittäisen Solun Taulukon sisältä. 
+     * 
+     * @param taulukko - Taulukko, jota käydään läpi
+     * @param rivi - rivi, jolla Solu sijaitsee
+     * @param sarake - sarake, jolla Solu sijaitsee
+     * @param uusiTaulukko - Käsitelty taulukko, jossa on uudet arvot
+     */
     public void kasitteleSolu(Taulukko taulukko, int rivi, int sarake, Taulukko uusiTaulukko) {
         if (taulukko.getSolu(rivi, sarake).getElossa() == false
                 && taulukko.getSolunNaapurit(rivi, sarake) == 3
@@ -68,12 +53,10 @@ public class Logiikka {
                 && taulukko.getSolunNaapurit(rivi, sarake) >= 2) {
             // jos kuollut ja kolme naapuria - herätä
             // tai elossa ja 2-3 naapuria - jätä eloon
-            uusiTaulukko.getSolu(rivi, sarake).setHerätä();
+            uusiTaulukko.getSolu(rivi, sarake).setHerata();
         } else {
             // muissa tapauksissa solu kuolee
             uusiTaulukko.getSolu(rivi, sarake).setNukuta();
         }
     }
-    
-    
 }

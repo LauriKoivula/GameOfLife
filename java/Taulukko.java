@@ -86,22 +86,11 @@ public class Taulukko {
      */
     public int getSolunNaapurit(int rivi, int kolumni) {
         int naapurit = 0;
-
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-                if (rivi + i >= 0 && rivi + i <= taulukko.length - 1) {
-                    if (kolumni + j >= 0 && kolumni + j <= taulukko[0].length - 1) {
-                        if (taulukko[rivi + i][kolumni + j].getElossa() == true) {
-                            if (taulukko[rivi + i][kolumni + j].getElossa() == true && i == 0 && j == 0) {
-                                naapurit--;
-                            }
-                            naapurit++;
-                        }
-                    }
-                }
+                naapurit = onkoSolunNaapuriTaulukossa(rivi, i, kolumni, j, naapurit);
             }
         }
-
         return naapurit;
     }
 
@@ -109,5 +98,45 @@ public class Taulukko {
     public String toString() {
         return "Taulukossa on " + Integer.toString(this.rivejä) + " riviä ja "
                 + Integer.toString(this.kolumneja) + " kolumnia";
+    }
+
+    /**
+     * Metodi laskee naapurit ja vähentää naapureista yhden kun lasketaan 
+     * kyseinen Solu naapureihin
+     * 
+     * @param rivi - rivi, jolla Solu sijaitsee
+     * @param i - Solun lähimmät naapurit rivillä
+     * @param kolumni - Kolumni, jolla Solu sijaitsee
+     * @param j - Solun lähimmät naapurit sarakkeessa
+     * @param naapurit - Solun naapurit
+     * @return 
+     */
+    public int onkoSoluElossaJaEiItsensa(int rivi, int i, int kolumni, int j, int naapurit) {
+        if (taulukko[rivi + i][kolumni + j].getElossa() == true) {
+            if (taulukko[rivi + i][kolumni + j].getElossa() == true && i == 0 && j == 0) {
+                naapurit--;
+            }
+            naapurit++;
+        }
+        return naapurit;
+    }
+
+    /**
+     * Metodi tarkistaa onko kyseinen Solu Taulukon sisällä
+     * 
+     * @param rivi - rivi, jolla Solu sijaitsee
+     * @param i - Solun lähimmät naapurit rivillä
+     * @param kolumni - Kolumni, jolla Solu sijaitsee
+     * @param j - Solun lähimmät naapurit sarakkeessa
+     * @param naapurit - Solun naapurit
+     * @return 
+     */
+    public int onkoSolunNaapuriTaulukossa(int rivi, int i, int kolumni, int j, int naapurit) {
+        if (rivi + i >= 0 && rivi + i <= taulukko.length - 1) {
+            if (kolumni + j >= 0 && kolumni + j <= taulukko[0].length - 1) {
+                naapurit = onkoSoluElossaJaEiItsensa(rivi, i, kolumni, j, naapurit);
+            }
+        }
+        return naapurit;
     }
 }
