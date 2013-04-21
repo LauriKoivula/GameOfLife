@@ -20,6 +20,12 @@ public class napinKuuntelija implements ActionListener {
        this.asettaja = nappi;
     }
 
+    /**
+     * Metodi vaihtaa simulointinappulan tekstin, 
+     * mahdollistaen Käyttöliittymän toiminnon pauselle.
+     * 
+     * @param ae 
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
 

@@ -4,6 +4,7 @@
  */
 package gui;
 
+import golpeli.Solu;
 import golpeli.Taulukko;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,65 +34,78 @@ public class TaulukkoGUI implements Runnable, MouseListener {
     private int y;
     private JButton[][] grid;
     private Taulukko taulukko;
+    private JButton nappula;
 
     public TaulukkoGUI(Taulukko taulukko) {
 
         this.taulukko = taulukko;
         this.x = taulukko.getRivit();
         this.y = taulukko.getKolumnit();
-        
-        
-        
     }
 
+    /**
+     * Metodi päivittää graafisen Taulukon uusien Solujen arvojen perusteella.
+     *
+     * @param taulukko
+     */
     public void paivitaTaulukko(Taulukko taulukko) {
         this.taulukko = taulukko;
         this.x = taulukko.getRivit();
         this.y = taulukko.getKolumnit();
 
-        
-        
         for (int i = 0; i < x; i++) {
-            //    System.out.println("i: " + i);
             for (int j = 0; j < y; j++) {
-                //        System.out.println("j: " + j);
-                if (this.taulukko.getSolu(i, j).getElossa() == true) {
-                    grid[i][j].setBackground(Color.BLACK);
-                } else {
-                    grid[i][j].setBackground(Color.WHITE);
-                }
-                //  grid[i][j].addMouseListener(new hiirenKuuntelija());
+                asetaTaustaVari(i, j);
             }
         }
         frame.setVisible(true);
     }
 
-    @Override
-    public void run() {
-        
-        this.grid = new JButton[x][y];
-        
-        frame = new JFrame("Game of Life");
-        frame.setLayout(new GridLayout(x, y));
-        frame.setPreferredSize(new Dimension(700, 700));
+    // ei toimi.. 
+    public Taulukko TarkistaMuutokset(Taulukko taulukko) {
+
+        this.taulukko = taulukko;
+        this.x = taulukko.getRivit();
+        this.y = taulukko.getKolumnit();
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                // jos halutaan indeksit näkymään, "("+i+","+j+")"
-                grid[i][j] = new JButton();
-                if (taulukko.getSolu(i, j).getElossa() == true) {
-                    grid[i][j].setBackground(Color.BLACK);
-                } else {
-                    grid[i][j].setBackground(Color.WHITE);
+                if (this.taulukko.getSolu(i, j).getElossa() == false
+                        && grid[i][j].getBackground() == Color.BLACK) {
+                    this.taulukko.getSolu(i, j).setHerata();
+                } else if (this.taulukko.getSolu(i, j).getElossa() == true
+                        && grid[i][j].getBackground() == Color.WHITE) {
+                    this.taulukko.getSolu(i, j).setNukuta();
                 }
+            }
+        }
+        frame.setVisible(true);
+        return this.taulukko;
+    }
 
-//                hiirenKuuntelija kuuntelija = new hiirenKuuntelija();
-//                grid[i][j].addMouseListener(kuuntelija);
-//                kuuntelija.klikkaus(null);
+    /**
+     * Metodi alustaa Graafisen ympäristön Taulukolle.
+     *
+     */
+    @Override
+    public void run() {
+
+        this.grid = new JButton[x][y];
+
+        frame = new JFrame("Game of Life");
+        frame.setLayout(new GridLayout(x, y));
+        frame.setPreferredSize(new Dimension(900, 900));
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                grid[i][j] = new JButton();
+                asetaTaustaVari(i, j);
+
+                solunKuuntelija kuuntelija = new solunKuuntelija(this.grid[i][j]);
+                this.grid[i][j].addActionListener(kuuntelija);
 
                 Border reuna = BorderFactory.createLineBorder(Color.WHITE, 1);
                 grid[i][j].setBorder(reuna);
-
 
                 frame.add(grid[i][j]);
             }
@@ -106,6 +120,15 @@ public class TaulukkoGUI implements Runnable, MouseListener {
 
     public JFrame getFrame() {
         return frame;
+    }
+    
+    public JButton getButton(JButton[][] grid, int i, int j) {
+        nappula = grid[i][j];
+        return nappula;
+    }
+    
+    public JButton[][] getGrid() {
+        return this.grid;
     }
 
     @Override
@@ -131,5 +154,13 @@ public class TaulukkoGUI implements Runnable, MouseListener {
     @Override
     public void mouseExited(MouseEvent me) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void asetaTaustaVari(int i, int j) {
+        if (taulukko.getSolu(i, j).getElossa() == true) {
+            grid[i][j].setBackground(Color.BLACK);
+        } else {
+            grid[i][j].setBackground(Color.WHITE);
+        }
     }
 }
