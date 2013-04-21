@@ -1,3 +1,5 @@
+package Tests;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -46,24 +48,26 @@ public class LogiikkaTest {
     // The methods must be annotated with annotation @Test. For example:
     
      @Test
-     public void kasitteleSoluOsaaKasitella() {
-         System.out.println(this.taulukko.getSolu(1, 1).toString());
+     public void kasitteleSoluOsaaKasitella() {      
          Logiikka logiikka = new Logiikka(this.taulukko);
          logiikka.kasitteleSolu(this.taulukko, 1, 1, taulukko);
-         System.out.println(taulukko.getSolu(1, 1).toString());
      assertTrue("Ei osaa käsitellä sääntöjen mukaan.", taulukko.getSolu(1, 1).getElossa()==false);
      }
      
-     // Ei toimi vielä.
-//     @Test 
-//     public void kasitteleTaulukkoOsaaKasitella() {
-//         System.out.println(taulukko.getSolu(1, 1).toString());
-//         Logiikka logiikka = new Logiikka(taulukko);
-//         logiikka.kasitteleTaulukko(taulukko);
-//         System.out.println(taulukko.getSolu(1, 1).toString());
-//         assertTrue("TaulukonKäsittelijä ei osaa käsitellä sääntöjen mukaan.", 
-//                 taulukko.getSolu(1, 1).getElossa()==true);
-//     }
-    
+     @Test
+     public void kasitteleSoluOsaaKasitella2() {      
+         Logiikka logiikka = new Logiikka(this.taulukko);
+         logiikka.kasitteleSolu(this.taulukko, 0, 0, taulukko);
+     assertTrue("Ei osaa käsitellä sääntöjen mukaan.", taulukko.getSolu(0, 0).getElossa()==true);
+     }
+     
+     @Test
+     public void kasitteleTaulukkoOsaaKasitella() {
+         Logiikka logiikka = new Logiikka(this.taulukko);
+         Taulukko kasiteltyTaulukko = logiikka.kasitteleTaulukko(taulukko);
+         assertTrue("Ei osaa käsitellä sääntöjen mukaan.", kasiteltyTaulukko.getSolu(1, 1).getElossa()==false);
+         assertTrue("Ei osaa käsitellä sääntöjen mukaan.", kasiteltyTaulukko.getSolu(0, 0).getElossa()==true);
+     }
+     
     
 }
