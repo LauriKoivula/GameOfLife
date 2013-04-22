@@ -18,14 +18,13 @@ public class Kayttoliittyma {
 
     private Taulukko ekaAskel;
     private Taulukko tokaAskel;
-    private Taulukko kolmasAskel;
     private Logiikka logiikka;
     private TaulukkoGUI gui;
     private InfoGUI info;
     private int riveja;
     private int kolumneja;
     private double tiheys;
-    private int simu;
+    private int askel;
     private int maara;
 
     /**
@@ -35,34 +34,37 @@ public class Kayttoliittyma {
      * @param kolumnit - Taulukon leveys
      * @param tiheys - Solujen suhteellinen tiheys välillä 0.0-1.0.
      */
-    public Kayttoliittyma(int rivit, int kolumnit, double tiheys) {
+    public Kayttoliittyma(int rivit, int kolumnit, double tiheys, int maara) {
         // Pelin alustus
         this.riveja = rivit;
         this.kolumneja = kolumnit;
         this.tiheys = tiheys;
+        this.maara = maara;
 
         // taulukon alustus
         this.ekaAskel = new Taulukko(this.riveja, this.kolumneja, this.tiheys);
 
         // simulointi looppi
-        this.maara = 200;
-        this.simu = 0;
+        //  this.maara = 200;
+        this.askel = 0;
         // kuinka monta askelta simuloidaan
-        while (this.simu < maara) {
-            tarkistaaOnkoEkaKierros();
-            this.simu++;
-
+        tarkistaaOnkoEkaKierros();
+        while (this.askel < maara) {
+            this.askel++;
             // kun paussi painettu odotetaan
             while (this.info.getPause().equals("Simuloi") || this.info.getPause().equals("Uudestaan?")) {
                 lyhytViivytys();
+                if (this.info.getYksiAskel().equals("Seuraava") && this.info.getPause().equals("Simuloi")) {
+                    askeleenPaivitys();
+                    this.info.setYksiAskel("Yksi askel");
+                    this.askel++;
+                    tarkistaaOnkoVikaKierros();
+                }
             }
             viivytys();
             askeleenPaivitys();
             tarkistaaOnkoVikaKierros();
         }
-
-
-
     }
 
     /**
@@ -70,13 +72,11 @@ public class Kayttoliittyma {
      *
      */
     public void viivytys() {
-        // viivytys
-        long present = System.currentTimeMillis();
-        long delay = 150;
-        long katkaisu = present + delay;
-        while (present < katkaisu) {
-            present = System.currentTimeMillis();
-            // antaa ajan kulua delayn osoittaman millisekuntia.
+
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Kayttoliittyma.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -86,13 +86,11 @@ public class Kayttoliittyma {
      *
      */
     public void lyhytViivytys() {
-        // lyhyt viive napin painamisen odottamista varten
-        long present = System.currentTimeMillis();
-        long delay = 10;
-        long katkaisu = present + delay;
-        while (present < katkaisu) {
-            present = System.currentTimeMillis();
-            // antaa ajan kulua delayn osoittaman millisekuntia.
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Kayttoliittyma.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -102,11 +100,11 @@ public class Kayttoliittyma {
      *
      */
     public void tarkistaaOnkoEkaKierros() {
-        if (this.simu == 0) {
+        if (this.askel == 0) {
             this.gui = new TaulukkoGUI(this.ekaAskel);
             SwingUtilities.invokeLater(gui);
-            this.info = new InfoGUI();
-            this.info.piirra(this.simu, this.maara);
+            this.info = new InfoGUI(this.ekaAskel);
+            this.info.piirra(this.askel, this.maara);
             SwingUtilities.invokeLater(info);
         }
 
@@ -118,9 +116,9 @@ public class Kayttoliittyma {
      *
      */
     public void tarkistaaOnkoVikaKierros() {
-        if (this.simu == this.maara) {
+        if (this.askel == this.maara) {
             this.ekaAskel = new Taulukko(this.riveja, this.kolumneja, this.tiheys);
-            this.simu = 1;
+            this.askel = 1;
             while (this.info.getPause().equals("Pause") || this.info.getPause().equals("Uudestaan?")) {
                 lyhytViivytys();
             }
@@ -134,17 +132,10 @@ public class Kayttoliittyma {
      *
      */
     public void askeleenPaivitys() {
-        this.info.paivitaInfo(this.simu);
+        this.info.paivitaInfo(this.askel);
         this.logiikka = new Logiikka(this.ekaAskel);
         this.tokaAskel = this.logiikka.kasitteleTaulukko(this.ekaAskel);
         this.gui.paivitaTaulukko(this.tokaAskel);
-        // this.kolmasAskel = this.gui.TarkistaMuutokset(this.tokaAskel);
-        // TarkistaMuutokset-metodi ei toimi..
-        // this.gui.paivitaTaulukko(this.kolmasAskel);
-
-        // paivitaTaulukko-metodi vie aikaa n.150ms, mikä on paljon.
-        // ei vie enää niin paljoa...
-        // SwingUtilities.invokeLater(gui);
         this.ekaAskel = this.tokaAskel;
     }
 }
