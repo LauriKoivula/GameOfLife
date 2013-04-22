@@ -27,7 +27,7 @@ import javax.swing.border.Border;
  *
  * @author Riki Sorsan veli
  */
-public class TaulukkoGUI implements Runnable, MouseListener {
+public class TaulukkoGUI implements Runnable {
 
     private JFrame frame;
     private int x;
@@ -35,6 +35,7 @@ public class TaulukkoGUI implements Runnable, MouseListener {
     private JButton[][] grid;
     private Taulukko taulukko;
     private JButton nappula;
+    private int paikka;
 
     public TaulukkoGUI(Taulukko taulukko) {
 
@@ -91,10 +92,11 @@ public class TaulukkoGUI implements Runnable, MouseListener {
     public void run() {
 
         this.grid = new JButton[x][y];
-
+        paikka = y*15;
         frame = new JFrame("Game of Life");
         frame.setLayout(new GridLayout(x, y));
-        frame.setPreferredSize(new Dimension(900, 900));
+        frame.setPreferredSize(new Dimension(y*15, x*15));
+        frame.setAlwaysOnTop(true);
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -130,30 +132,9 @@ public class TaulukkoGUI implements Runnable, MouseListener {
     public JButton[][] getGrid() {
         return this.grid;
     }
-
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        //  grid[i][j].setBackground(Color.yellow);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public int getPaikka() {
+        return paikka;
     }
 
     public void asetaTaustaVari(int i, int j) {
