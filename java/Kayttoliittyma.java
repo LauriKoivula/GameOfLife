@@ -6,8 +6,10 @@ package golpeli;
 
 import gui.InfoGUI;
 import gui.TaulukkoGUI;
+import java.awt.HeadlessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -34,18 +36,22 @@ public class Kayttoliittyma {
      * @param kolumnit - Taulukon leveys
      * @param tiheys - Solujen suhteellinen tiheys välillä 0.0-1.0.
      */
-    public Kayttoliittyma(int rivit, int kolumnit, double tiheys, int maara) {
+    public Kayttoliittyma() {
         // Pelin alustus
+        int rivit = kysyLukua("Anna taulukon korkeus: ");
+        int kolumnit = kysyLukua("Anna taulukon leveys: ");
+        double solutiheys =kysyLukuaDouble("Anna solujen tiheys välillä 0.0-0.1: ");
+        int pituus = kysyLukua("Anna simulaation maksimipituus askelissa: ");
+        
         this.riveja = rivit;
         this.kolumneja = kolumnit;
-        this.tiheys = tiheys;
-        this.maara = maara;
+        this.tiheys = solutiheys;
+        this.maara = pituus;
 
         // taulukon alustus
         this.ekaAskel = new Taulukko(this.riveja, this.kolumneja, this.tiheys);
 
         // simulointi looppi
-        //  this.maara = 200;
         this.askel = 0;
         // kuinka monta askelta simuloidaan
         tarkistaaOnkoEkaKierros();
@@ -72,7 +78,6 @@ public class Kayttoliittyma {
      *
      */
     public void viivytys() {
-
         try {
             Thread.sleep(150);
         } catch (InterruptedException ex) {
@@ -86,7 +91,6 @@ public class Kayttoliittyma {
      *
      */
     public void lyhytViivytys() {
-
         try {
             Thread.sleep(10);
         } catch (InterruptedException ex) {
@@ -107,7 +111,6 @@ public class Kayttoliittyma {
             this.info.piirra(this.askel, this.maara);
             SwingUtilities.invokeLater(info);
         }
-
     }
 
     /**
@@ -137,5 +140,19 @@ public class Kayttoliittyma {
         this.tokaAskel = this.logiikka.kasitteleTaulukko(this.ekaAskel);
         this.gui.paivitaTaulukko(this.tokaAskel);
         this.ekaAskel = this.tokaAskel;
+    }
+    
+    private int kysyLukua(String teksti) throws HeadlessException, NumberFormatException {
+        int luku;
+        luku = Integer.parseInt( JOptionPane.showInputDialog(teksti) );
+        
+        return luku;
+    }
+    
+    private double kysyLukuaDouble(String teksti) throws HeadlessException, NumberFormatException {
+        double luku;
+        luku = Double.parseDouble(JOptionPane.showInputDialog(teksti));
+        
+        return luku;
     }
 }

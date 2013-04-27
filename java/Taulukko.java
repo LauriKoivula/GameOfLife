@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Taulukko {
 
-    private int rivejä;
+    private int riveja;
     private int kolumneja;
     private Solu[][] taulukko;
     private double solutiheys;
@@ -24,9 +24,9 @@ public class Taulukko {
      * @param kolumneja käyttäjän antama sarakemäärä
      * @param tiheys käyttäjän antama solutiheys välillä 0.0-1.0
      */
-    public Taulukko(int rivejä, int kolumneja, double tiheys) {
+    public Taulukko(int riveja, int kolumneja, double tiheys) {
 
-        this.rivejä = rivejä;
+        this.riveja = riveja;
         this.kolumneja = kolumneja;
         this.solutiheys = tiheys;
 
@@ -35,7 +35,7 @@ public class Taulukko {
         // Matriisi, joka on täytetty Soluilla
         // todennäköisyys asetetaan vielä käsin
 
-        taulukko = new Solu[rivejä][kolumneja];
+        taulukko = new Solu[riveja][kolumneja];
 
         for (int rivi = 0; rivi < taulukko.length; rivi++) {
             for (int sarake = 0; sarake < taulukko[0].length; sarake++) {
@@ -54,7 +54,7 @@ public class Taulukko {
      * Tulostaa taulukon käyttäen Solun toString ominaisuuksia. 
      */
     public void tulostaTaulukko() {
-        for (int rivi = 0; rivi < this.rivejä; rivi++) {
+        for (int rivi = 0; rivi < this.riveja; rivi++) {
             for (int sarake = 0; sarake < kolumneja; sarake++) {
                 if (sarake < kolumneja - 1) {
                     System.out.print(taulukko[rivi][sarake].toString());
@@ -66,7 +66,7 @@ public class Taulukko {
     }
 
     public int getRivit() {
-        return this.rivejä;
+        return this.riveja;
     }
 
     public int getKolumnit() {
@@ -96,7 +96,7 @@ public class Taulukko {
 
     @Override
     public String toString() {
-        return "Taulukossa on " + Integer.toString(this.rivejä) + " riviä ja "
+        return "Taulukossa on " + Integer.toString(this.riveja) + " riviä ja "
                 + Integer.toString(this.kolumneja) + " kolumnia";
     }
 

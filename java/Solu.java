@@ -12,7 +12,6 @@ public class Solu {
 
     private int rivi;
     private int kolumni;
-    private int naapureita;
     private boolean elossa;
 
     public Solu(int rivi, int kolumni, boolean elossa) {
@@ -20,8 +19,6 @@ public class Solu {
         this.rivi = rivi;
         this.kolumni = kolumni;
         this.elossa = elossa;
-        this.naapureita = 0;
-
     }
 
     /**
