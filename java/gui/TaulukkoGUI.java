@@ -4,22 +4,13 @@
  */
 package gui;
 
-import golpeli.Solu;
 import golpeli.Taulukko;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
@@ -60,28 +51,6 @@ public class TaulukkoGUI implements Runnable {
             }
         }
         frame.setVisible(true);
-    }
-
-    // ei toimi.. 
-    public Taulukko TarkistaMuutokset(Taulukko taulukko) {
-
-        this.taulukko = taulukko;
-        this.x = taulukko.getRivit();
-        this.y = taulukko.getKolumnit();
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (this.taulukko.getSolu(i, j).getElossa() == false
-                        && grid[i][j].getBackground() == Color.BLACK) {
-                    this.taulukko.getSolu(i, j).setHerata();
-                } else if (this.taulukko.getSolu(i, j).getElossa() == true
-                        && grid[i][j].getBackground() == Color.WHITE) {
-                    this.taulukko.getSolu(i, j).setNukuta();
-                }
-            }
-        }
-        frame.setVisible(true);
-        return this.taulukko;
     }
 
     /**

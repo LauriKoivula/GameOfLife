@@ -4,16 +4,13 @@
  */
 package gui;
 
-import golpeli.Kayttoliittyma;
 import golpeli.Taulukko;
-import gui.TaulukkoGUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -45,18 +42,22 @@ public class InfoGUI implements Runnable {
      */
     public void piirra(int simu, int paljonko) {
         loppu = paljonko;
+        
         ikkuna = new JFrame("Info");
         ikkuna.setLayout(new GridLayout(4, 1));
         ikkuna.setPreferredSize(new Dimension(250, 300));
         ikkuna.setAlwaysOnTop(true);
         ikkuna.setLocation(paikka, 0);
+        
         simulaatiot = new JTextField("Simulointi askel: " + simu);
         Font font = new Font("Verdana", Font.BOLD, 14);
         simulaatiot.setFont(font);
         ikkuna.add(simulaatiot);
+        
         maara = new JTextField("Askelia maksimissaan: " + paljonko);
         maara.setFont(font);
         ikkuna.add(maara);
+        
         paussi = new JButton("Simuloi");
         Font nappulaFont = new Font("Verdana", Font.BOLD, 30);
         paussi.setFont(nappulaFont);
@@ -66,6 +67,7 @@ public class InfoGUI implements Runnable {
         paussi.addActionListener(kuuntelija);
         paussi.setBackground(Color.RED);
         ikkuna.add(paussi);
+        
         yksiAskel = new JButton("Yksi askel");
         yksiAskel.setFont(nappulaFont);
         yksiAskel.setForeground(Color.WHITE);
